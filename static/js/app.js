@@ -25,4 +25,17 @@ function init() {
     var top_id = sort_id.map(x => x.slice(0,10));
 
     var first_data_ID = data.metadata[0]
+    var sample_Meta = d3.select("#sample-metadata").selectAll('h1')
+    var firstMetadata = sample_Meta.data(d3.entries(first_data_ID))
+    firstMetadata.enter()
+        .append('h1')
+        .merge(firstMetadata)
+        .text(d => `${d.key} : ${d.value}`)
+        .style('font-size', '12px')
+    firstMetadata.exit().remove()
 
+    var trace1 = {
+        x : topten[0],
+        
+    }
+    
