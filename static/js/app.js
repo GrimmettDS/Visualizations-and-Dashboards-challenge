@@ -2,7 +2,7 @@ function optionChanged(id) {
     updatePlotly2(id);
     updateDemoInfo(id)
 };
-
+//When going to initial html page, creates function so pages loads on first dropdown
 function init() {
     d3.json("samples.json").then((data) => {
         var names = data.samples.map(x=>x.id)
@@ -12,11 +12,12 @@ function init() {
                 .text(name)
             });  
 
+    // Creating data arrays            
     var sample_val = data.samples.map(x=> x.sample_values);
     var otu_label = data.samples.map(x=> x.otu_labels);
     var otu_ids = data.samples.map(x=> x.otu_ids);
 
-
+    // Selecting Top Ten OTU data
     var sort = sample_val.sort(function(a, b) {
         return b-a
     });
@@ -43,7 +44,7 @@ function init() {
   
     firstMetadata.exit().remove()
 
-    // Create trace for bar chart
+    // Create bar chart trace and layout
     var trace1 = {
         x : topten[0],
         y : top_id[0].map(x => "OTU" + x),
@@ -56,7 +57,7 @@ function init() {
             order: 'descending'
         }]
     };
-    // Create layout for bar chart
+
     var layout1 = {
         title : '<b>Top 10 OTU</b><br>Operational Taxonomic Units'
     };
@@ -66,6 +67,7 @@ function init() {
     var config = {responsive:true}
     Plotly.newPlot('bar', data, layout1,config);
 
+    // Create bubble trace and layout
     var trace2 = {
         x : otu_ids[0],
         y : sample_val[0],
@@ -92,6 +94,7 @@ function init() {
     };
     var config = {responsive:true}
 
+    // Create bubble chart
     var data2 = [trace2];
     Plotly.newPlot('bubble',data2,layout2,config);
 
