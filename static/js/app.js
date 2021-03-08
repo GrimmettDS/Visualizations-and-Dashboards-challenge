@@ -10,7 +10,6 @@ function init() {
             d3.select('#selDataset')
                 .append('option')
                 .text(name)
-                .attr("fill","red");
             });  
 
     var sample_val = data.samples.map(x=> x.sample_values);
@@ -59,7 +58,7 @@ function init() {
     };
     // Create layout for bar chart
     var layout1 = {
-        title : '<b>Top 10 OTU</b>'
+        title : '<b>Top 10 OTU</b><br>Operational Taxonomic Units'
     };
 
     // Create bar chart
@@ -123,7 +122,7 @@ function init() {
           marker: { size: 12, color: "850000" },
           showlegend: false,
           name: "Freq",
-          text: firstWFreq,
+          text: WFreq,
           hoverinfo: "text+name"
         },
         {
@@ -134,15 +133,15 @@ function init() {
           textposition: "inside",
           marker: {
             colors: [
-              "rgba(0, 105, 11, .5)",
-              "rgba(10, 120, 22, .5)",
-              "rgba(14, 127, 0, .5)",
-              "rgba(110, 154, 22, .5)",
-              "rgba(170, 202, 42, .5)",
-              "rgba(202, 209, 95, .5)",
-              "rgba(210, 206, 145, .5)",
-              "rgba(232, 226, 202, .5)",
-              "rgba(240, 230, 215, .5)",
+              "rgba(255, 247, 5, .5)",
+              "rgba(255, 255, 15, .5)",
+              "rgba(255, 255, 36, .5)",
+              "rgba(255, 255, 66, .5)",
+              "rgba(255, 255, 97, .5)",
+              "rgba(255, 255, 127, .5)",
+              "rgba(255, 255, 158, .5)",
+              "rgba(255, 255, 189, .5)",
+              "rgba(255, 255, 219, .5)",
               "rgba(255, 255, 255, 0)"
             ]
           },
@@ -166,7 +165,7 @@ function init() {
             }
           }
         ],
-        title: "<b>Belly Button Washing Frequency</b> <br> Scrubs per Week",
+        title: "<b>Belly Button Wash Frequency</b> <br> Per Week",
         xaxis: {
           zeroline: false,
           showticklabels: false,
@@ -191,33 +190,28 @@ function init() {
 init();
 
 
-
 function updatePlotly2(id) {
     d3.json("samples.json").then((data) => {
         
         var test = data.samples.filter(x => x.id === id);
-
        
         var sample_values = test.map(x => x.sample_values)
             .sort(function(a, b) {
                 return b-a
             });
         var top_values = sample_values.map(x => x.slice(0,10));
-
         
         var otu_ids = test.map(x=> x.otu_ids)
             .sort(function(a, b) {
                 return b-a
             });
         var top_ids = otu_ids.map(x => x.slice(0,10));
-
        
         var otu_label = test.map(x=> x.otu_labels)
         .sort(function(a, b) {
             return b-a
         });
         var top_labels = otu_label.map(x => x.slice(0,10));
-
 
         var trace = {
             x : top_values[0],
@@ -231,16 +225,14 @@ function updatePlotly2(id) {
                 order: 'descending'
               }]
         };
-
      
         var layout1 = {
-            title: "<b>Top 10 OTU</b>"
+            title: "<b>Top 10 OTU</b><br>Operational Taxonomic Units"
         };
         var data1 = [trace];
         var config = {responsive:true}
 
         Plotly.newPlot('bar', data1,layout1,config);
-
 
         var trace2 = {
             x : test.map(x=> x.otu_ids)[0],
@@ -252,7 +244,6 @@ function updatePlotly2(id) {
                 size : test.map(x => x.sample_values)[0]
             }   
         };
-
 
         var layout2 = {
             title: '<b>Bubble Chart</b>',
@@ -352,7 +343,7 @@ function updateDemoInfo(id) {
                 }
             }
             ],
-            title: "<b>Belly Button Washing Frequency</b> <br> Scrubs per Week",
+            title: "<b>Belly Button Wash Frequency</b> <br> Per Week",
             xaxis: {
             zeroline: false,
             showticklabels: false,
