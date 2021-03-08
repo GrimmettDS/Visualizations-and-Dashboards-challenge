@@ -98,8 +98,10 @@ function init() {
     var data2 = [trace2];
     Plotly.newPlot('bubble',data2,layout2,config);
 
+    // Get Wash data
     var WFreq = first_data_ID.wfreq;
  
+    // Gauge needle calculations
     var WFreqDeg = WFreq * 20;
     var degrees = 180 - WFreqDeg;
     var radius = 0.5;
@@ -107,7 +109,6 @@ function init() {
     var x = radius * Math.cos(degrees * Math.PI / 180);
     var y = radius * Math.sin(degrees * Math.PI / 180);
 
- 
     var path1 = (degrees < 45 || degrees > 135) ? 'M -0.0 -0.025 L 0.0 0.025 L ' : 'M -0.025 -0.0 L 0.025 0.0 L ';
     var mainPath = path1,
      pathX = String(x),
@@ -116,7 +117,7 @@ function init() {
      pathEnd = ' Z';
     var path = mainPath.concat(pathX,space,pathY,pathEnd);
 
-
+    // Gauge Chart trace and layout
     var dataGauge = [
         {
           type: "scatter",
@@ -192,7 +193,7 @@ function init() {
 
 init();
 
-
+// Bar chart and Bubble chart update
 function updatePlotly2(id) {
     d3.json("samples.json").then((data) => {
         
@@ -216,6 +217,7 @@ function updatePlotly2(id) {
         });
         var top_labels = otu_label.map(x => x.slice(0,10));
 
+        // Create Bar chart trace and layout
         var trace = {
             x : top_values[0],
             y : top_ids[0].map(x => "OTU" + x),
@@ -235,8 +237,10 @@ function updatePlotly2(id) {
         var data1 = [trace];
         var config = {responsive:true}
 
+        // Plot bar chart
         Plotly.newPlot('bar', data1,layout1,config);
 
+        // Create Bubble chart trace and layout
         var trace2 = {
             x : test.map(x=> x.otu_ids)[0],
             y : test.map(x => x.sample_values)[0],
@@ -261,15 +265,15 @@ function updatePlotly2(id) {
                 pad: 4
               }
         };
-
- 
         var data2 = [trace2];
         var config = {responsive:true}
+
+        // Plot Bubble chart
         Plotly.newPlot('bubble', data2,layout2,config)
     });
 };
 
-
+// New ID selection update
 function updateDemoInfo(id) {
     d3.json("samples.json").then((data) => {
 
