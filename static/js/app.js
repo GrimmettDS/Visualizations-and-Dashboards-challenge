@@ -282,7 +282,7 @@ function updateDemoInfo(id) {
         var sampleMetadata1 = d3.select("#sample-metadata").selectAll('h1')
         var sampleMetadata = sampleMetadata1.data(d3.entries(metadataSamples))
         sampleMetadata.enter().append('h1').merge(sampleMetadata).text(d => `${d.key} : ${d.value}`).style('font-size','12px');
-          
+        console.log(sampleMetadata)
         var wFreq = metadataSamples.wfreq;
         var wFreqDeg = wFreq * 20;
 
