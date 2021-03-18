@@ -278,9 +278,14 @@ function updateDemoInfo(id) {
     d3.json("samples.json").then((data) => {
 
         var metadataSamples = data.metadata.filter(x => x.id === +id)[0];
+        console.log(metadataSamples)
 
         var sampleMetadata1 = d3.select("#sample-metadata").selectAll('h1')
+        console.log(sampleMetadata1)
+        
         var sampleMetadata = sampleMetadata1.data(d3.entries(metadataSamples))
+        console.log(sampleMetadata)
+        
         sampleMetadata.enter().append('h1').merge(sampleMetadata).text(d => `${d.key} : ${d.value}`).style('font-size','12px');
         console.log(sampleMetadata)
         var wFreq = metadataSamples.wfreq;
